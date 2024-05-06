@@ -17,9 +17,11 @@ const { title } = Astro.props;
 			href="https://fonts.cdnfonts.com/css/major-mono-display-2"
 			rel="stylesheet"
 		/>
+		<base href="./">
 
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
+		
 	</head>
 	<body>
 		<script src="./src/scripts/main.js" type="module"></script>
