@@ -6,7 +6,7 @@ import Card from '../components/Card.astro';
 <Layout title="Welcome to Astro.">
 	<main>
 		<div class = "name-container">
-			<h1>Sean Clipper</h1>
+			<nameCard>Sean <br> Clipper</nameCard>
 		</div>
 		
 	</main>
@@ -31,12 +31,15 @@ import Card from '../components/Card.astro';
 		height: auto;
 		z-index: -1;
 	}
-	h1 {
-		font-size: 8rem;
+	nameCard {
+		position: absolute;
+		font-size: 6rem;
 		font-weight: 700;
 		line-height: 1;
-		text-align: center;
+		/* text-align: center; */
 		margin-bottom: 1em;
+		left: 0.5%;
+		top:25%;
 	}
 	.text-gradient {
 		background-image: var(--accent-gradient);
