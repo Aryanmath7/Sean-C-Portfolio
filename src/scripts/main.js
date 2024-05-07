@@ -13,7 +13,7 @@ class LoadModelDemo {
     this._threejs.shadowMap.enabled = true;
     this._threejs.shadowMap.type = THREE.PCFSoftShadowMap;
     this._threejs.setPixelRatio(window.devicePixelRatio);
-    this._threejs.setSize(window.innerWidth, window.innerHeight * (1/2));
+    this._threejs.setSize(window.innerWidth, window.innerHeight * (1 / 2));
 
     document.getElementById('canvas-container').appendChild(this._threejs.domElement);
 
@@ -22,7 +22,7 @@ class LoadModelDemo {
     }, false);
 
     const fov = 60;
-    const aspect = window.innerWidth / (window.innerHeight * (1/2));
+    const aspect = window.innerWidth / (window.innerHeight * (1 / 2));
     const near = 1.0;
     const far = 1000.0;
     this._camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
@@ -45,6 +45,7 @@ class LoadModelDemo {
     this._previousRAF = null;
 
     this._LoadModel();
+    this._LoadBird();
     this._SetupLighting();
     this._RAF();
   }
@@ -70,6 +71,32 @@ class LoadModelDemo {
       });
     });
   }
+
+  _LoadBird() {
+    const loader = new GLTFLoader();
+    loader.load('/Sean-C-Portfolio/bird_orange.glb', (gltf) => {
+      gltf.scene.traverse(c => {
+        c.castShadow = true;
+        c.receiveShadow = true; // Allow objects to receive shadows
+      });
+
+      gltf.scene.position.set(-40, 49, -100);
+      gltf.scene.rotation.y = Math.PI / 8;
+      const scaleFactor = 10; // Adjust as needed
+      gltf.scene.scale.set(scaleFactor, scaleFactor, scaleFactor);
+
+      this._scene.add(gltf.scene);
+
+      // Create an AnimationMixer for each animation clip
+      gltf.animations.forEach((clip) => {
+        const mixer = new THREE.AnimationMixer(gltf.scene);
+        const action = mixer.clipAction(clip);
+        action.play(); // Start playing the animation
+        this._mixers.push(mixer);
+      });
+    });
+  }
+
 
 
   _createSkyTexture() {
@@ -121,9 +148,9 @@ class LoadModelDemo {
 
 
   _OnWindowResize() {
-    this._camera.aspect = window.innerWidth / (window.innerHeight * (1/2));
+    this._camera.aspect = window.innerWidth / (window.innerHeight * (1 / 2));
     this._camera.updateProjectionMatrix();
-    this._threejs.setSize(window.innerWidth, window.innerHeight * (1/2));
+    this._threejs.setSize(window.innerWidth, window.innerHeight * (1 / 2));
   }
 
   _RAF() {
