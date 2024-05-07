@@ -51,7 +51,7 @@ class LoadModelDemo {
 
   _LoadModel() {
     const loader = new GLTFLoader();
-    loader.load('./resources/animatedtree.glb', (gltf) => {
+    loader.load('./public/animatedtree.glb', (gltf) => {
       gltf.scene.traverse(c => {
         c.castShadow = true;
         c.receiveShadow = true; // Allow objects to receive shadows
